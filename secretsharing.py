@@ -1,32 +1,44 @@
-<<<<<<< HEAD
 from sympy import nextprime
 import numpy as np
-import lagrange
-
-# create public key
-def generatepublickey(p, phi, secret, private):
-    public = list(map(lambda x: (secret + phi[0]*x + phi[1]*x**2 + phi[2]*x**3
-                      + phi[3]*x**4) % p, private))
-    return public
 
 
-p = nextprime(100000000)
-np.random.seed(123)
+# create private key pair
+def generatekey(p, phi, secret, private):
+    private2 = list(map(lambda x: (secret + phi[0]*x + phi[1]*x**2 + phi[2]*x**3
+                        + phi[3]*x**4) % p, private))
+    return private2
+
+
+# Fermat's little theorem
+def inv(x, p):
+    if x < 0:
+        x = x % p
+    b = x
+    for i in range(p - 3):
+        b = b * x % p
+    return b
+
+
+# calculate the secret through Lagrange interpolation in finite filed
+def lagrange(private, private2, p):
+    tempi = 0
+    for i in range(5):
+        tempj = private2[i]
+        for j in range(5):
+            if j != i:
+                tempj = (tempj * inv(private[i] - private[j], p)
+                         * (-private[j])) % p
+        tempi = (tempi + tempj) % p
+    return tempi
+
+
+p = nextprime(1000)
+np.random.seed(579)
 phi = np.random.randint(low=1, high=p-1, size=4)
 private = np.random.randint(low=1, high=100, size=10)
 
-
 secret = 30  # set secret
-public = generatepublickey(p, phi, secret, private)
+private2 = generatekey(p, phi, secret, private)
 
-private_pulic_key = [(private[i], public[i]) for i in range(10)]
 
-lagrange([(1,15), (2,9), (3,3)], 17)
-
-private_pulic_key
-private_pulic_key[0:5]
-=======
-from sympy import sieve
-
-sieve.prime
->>>>>>> c0d2ab505990b65d3cf0085250c3663880690909
+recoversecret = lagrange(private[0:5], private2[0:5], p)
