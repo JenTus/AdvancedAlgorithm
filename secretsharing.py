@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from sympy import nextprime
 import numpy as np
 import lagrange
@@ -24,3 +25,8 @@ lagrange([(1,15), (2,9), (3,3)], 17)
 
 private_pulic_key
 private_pulic_key[0:5]
+=======
+from sympy import sieve
+
+sieve.prime
+>>>>>>> c0d2ab505990b65d3cf0085250c3663880690909
