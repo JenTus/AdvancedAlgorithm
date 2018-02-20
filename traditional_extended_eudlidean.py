@@ -2,7 +2,7 @@
 
 
 import numpy as np
-import math
+from fractions import gcd
 
 
 #  remove zeros as higher coefficients
@@ -118,4 +118,4 @@ print("r[l] is: %s, t[l] is: %s" % (r[l], t[l]))
 [l, r, s, t] = tee_pol([1, 1, 0, 1, 1], [1, 0, 0, 0, 1])
 print(r[l])
 
-math.gcd(1234567, 123)
+gcd(1234567, 123)
