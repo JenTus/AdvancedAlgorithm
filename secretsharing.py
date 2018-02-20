@@ -32,7 +32,7 @@ def lagrange(private, private2, p):
     return tempi
 
 
-p = nextprime(1000)
+p = nextprime(10000)
 np.random.seed(579)
 phi = np.random.randint(low=1, high=p-1, size=4)
 private = np.random.randint(low=1, high=100, size=10)
