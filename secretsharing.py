@@ -41,4 +41,10 @@ secret = 30  # set secret
 private2 = generatekey(p, phi, secret, private)
 
 
-recoversecret = lagrange(private[0:5], private2[0:5], p)
+# randomly choose five persons to re-construct the secret
+index = np.random.choice(10, 5, replace=False)
+newprivate = [private[i] for i in index]
+newprivate2 = [private2[i] for i in index]
+recoversecret = lagrange(newprivate, newprivate2, p)
+newprivate
+print recoversecret
