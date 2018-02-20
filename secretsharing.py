@@ -4,8 +4,8 @@ import numpy as np
 
 # create private key pair
 def generatekey(p, phi, secret, private):
-    private2 = list(map(lambda x: (secret + phi[0]*x + phi[1]*x**2 + phi[2]*x**3
-                        + phi[3]*x**4) % p, private))
+    private2 = list(map(lambda x: (secret + phi[0]*x + phi[1]*x**2
+                        + phi[2]*x**3 + phi[3]*x**4) % p, private))
     return private2
 
 
