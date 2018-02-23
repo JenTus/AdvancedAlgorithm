@@ -1,4 +1,4 @@
-1from sympy import nextprime
+from sympy import nextprime
 import numpy as np
 
 
