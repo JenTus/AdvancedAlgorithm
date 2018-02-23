@@ -20,15 +20,15 @@ def inv(x, p):
 
 
 # calculate the secret through Lagrange interpolation in finite filed
-# [private[i], private2[i]]
-def lagrange(private, private2, p, n):
+# [xi[i], eta[i]]
+def lagrange(xi, eta, p, n):
     tempi = 0
     for i in range(n):
-        tempj = private2[i]
+        tempj = eta[i]
         for j in range(n):
             if j != i:
-                tempj = (tempj * inv(private[i] - private[j], p)
-                         * (-private[j])) % p
+                tempj = (tempj * inv(xi[i] - xi[j], p)
+                         * (-xi[j])) % p
         tempi = (tempi + tempj) % p
     return tempi
 
