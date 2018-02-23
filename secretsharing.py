@@ -21,11 +21,11 @@ def inv(x, p):
 
 # calculate the secret through Lagrange interpolation in finite filed
 # [xi[i], eta[i]]
-def lagrange(xi, eta, p, n):
+def lagrange(xi, eta, p, e):
     tempi = 0
-    for i in range(n):
+    for i in range(e):
         tempj = eta[i]
-        for j in range(n):
+        for j in range(e):
             if j != i:
                 tempj = (tempj * inv(xi[i] - xi[j], p)
                          * (-xi[j])) % p
