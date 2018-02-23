@@ -20,11 +20,11 @@ def inv(x, p):
 
 
 # calculate the secret through Lagrange interpolation in finite filed
-def lagrange(private, private2, p):
+def lagrange(private, private2, p, n):
     tempi = 0
-    for i in range(5):
+    for i in range(n):
         tempj = private2[i]
-        for j in range(5):
+        for j in range(n):
             if j != i:
                 tempj = (tempj * inv(private[i] - private[j], p)
                          * (-private[j])) % p
@@ -45,6 +45,6 @@ private2 = generatekey(p, phi, secret, private)
 index = np.random.choice(10, 5, replace=False)
 newprivate = [private[i] for i in index]
 newprivate2 = [private2[i] for i in index]
-recoversecret = lagrange(newprivate, newprivate2, p)
+recoversecret = lagrange(newprivate, newprivate2, p, 5)
 newprivate
 print recoversecret
