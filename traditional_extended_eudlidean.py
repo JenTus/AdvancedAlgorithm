@@ -17,8 +17,8 @@ def remove_zeros(x):
 
 #  multiplication of polynomials
 #  a = a_0 + a_1 * x + a_2 * x^2 ...
-#  %2
-def mul(a_0, b_0):
+#  %p
+def mul(a_0, b_0, p):
     if len(a_0) > len(b_0):
         a = b_0
         b = a_0
@@ -32,30 +32,31 @@ def mul(a_0, b_0):
         for j in range(len(b)):
             d[i][j + i] = a[i]*b[j]
 
-    e = [x % 2 for x in np.dot(c, d)]
+    e = [x % p for x in np.dot(c, d)]
     e = remove_zeros(e)
     return e
 
 
-def add(a, b):
+# addition of polynomails
+def add(a, b, p):
     if len(a) > len(b):
         b = b + [0 for i in range(len(a) - len(b))]
     else:
         a = a + [0 for i in range(len(b) - len(a))]
-    c = [sum(x) % 2 for x in zip(a, b)]
+    c = [sum(x) % p for x in zip(a, b)]
     return remove_zeros(c)
 
 
 #  polydiv
 #  return q and r
-def div(a, b):
+def div(a, b, p):
     r = a[:]
     q = [0 for i in range(len(a))]
 
     while len(r) >= len(b):
         q[len(r) - len(b)] = 1
         b_q = [0 for i in range(len(r) - len(b))] + b[:]  # b multiply q
-        r = add(r, [-x for x in b_q])
+        r = add(r, [-x for x in b_q], p)
 
         for i in range(len(r)):
             index = len(r) - 1 - i
