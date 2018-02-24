@@ -1,4 +1,4 @@
-"""tranditional_extended_eudlidean.py: All Calculations are in mod 2"""
+"""tranditional_extended_eudlidean.py: All Calculations mod p"""
 
 
 import numpy as np
@@ -7,12 +7,11 @@ from fractions import gcd
 
 #  remove zeros as higher coefficients
 def remove_zeros(x):
-    for i in range(len(x)):
-        index = len(x) - 1 - i
+    for index in range(len(x)-1, -1, -1):
         if x[index] != 0:
             x = x[:][0:index + 1]
-            break
-    return x
+            return x
+    return [0]
 
 
 #  multiplication of polynomials
@@ -47,26 +46,38 @@ def add(a, b, p):
     return remove_zeros(c)
 
 
+# subtraction of polynomails
+def sub(a, b, p):
+    minorb = [-i for i in b]
+    return add(a, minorb, p)
+
+
+# Fermat's little theorem
+def inv(x, p):
+    if x < 0:
+        x = x % p
+    b = x
+    for i in range(p - 3):
+        b = b * x % p
+    return b
+
+
 #  polydiv
 #  return q and r
 def div(a, b, p):
     r = a[:]
-    q = [0 for i in range(len(a))]
+    mu = inv(b[-1], p)
+    etalist = []
 
-    while len(r) >= len(b):
-        q[len(r) - len(b)] = 1
-        b_q = [0 for i in range(len(r) - len(b))] + b[:]  # b multiply q
-        r = add(r, [-x for x in b_q], p)
+    for i in range(len(a) - len(b), -1, -1):
+        if len(r) == len(b) + i:
+            eta = [0 if x != i else r[-1] * mu for x in range(i+1)]
+            r = sub(r, mul(eta, b, p), p)
+        else:
+            eta = [0]
+        etalist.append(eta)
 
-        for i in range(len(r)):
-            index = len(r) - 1 - i
-            if index == 0:
-                return [q, r]
-            if r[index] != 0:
-                r = r[:][0:index+1]
-                break
-
-    q = remove_zeros(q)
+    q = reduce(lambda x, y: add(x, y, p), etalist)
     return [q, r]
 
 
@@ -93,30 +104,36 @@ def tee(f, g):
 
 #  traditional extended eudlidean algorithm
 #  for polynomials
-def tee_pol(f, g):
+def tee_pol(f, g, p):
     r = [f, g]
     s = [[1], [0]]
     t = [[0], [1]]
     q = [[0]]
     i = 1
     while sum(r[i]) != 0:
-        q.append(div(r[i-1], r[i])[0])
-        r_temp = add(r[i-1], [-x for x in mul(q[i], r[i])])
-        s_temp = add(s[i-1], [-x for x in mul(q[i], s[i])])
-        t_temp = add(t[i-1], [-x for x in mul(q[i], t[i])])
+        q.append(div(r[i-1], r[i], p)[0])
+        r_temp = sub(r[i-1], mul(q[i], r[i], p), p)
+        s_temp = sub(s[i-1], mul(q[i], s[i], p), p)
+        t_temp = sub(t[i-1], mul(q[i], t[i], p), p)
         r.append(r_temp)
         s.append(s_temp)
         t.append(t_temp)
         #  print "i= %d, r = %s, s = %s, t = %s" %(i,r[i],s[i], t[i])
         i = i+1
-    return [i-1, r, s, t]
+    return [i-1, r, s, t, q]
 
 
 #  testing
 [l, r, s, t] = tee(1234567, 123)
 print("r[l] is: %s, t[l] is: %s" % (r[l], t[l]))
 
-[l, r, s, t] = tee_pol([1, 1, 0, 1, 1], [1, 0, 0, 0, 1])
+[l, r, s, t, q] = tee_pol([1, 1, 1, 1, 1, 1], [1, 0, 0, 0, 1, 1], 2)
 print(r[l])
 
+[l, r, s, t, q] = tee_pol([0, 9, 0, 2, 4, 9, 3, 5, 1], [5, 7, 5, 2, 10, 9, 6, 7], 11)
+q
+t
+r
+s
+t
 gcd(1234567, 123)
