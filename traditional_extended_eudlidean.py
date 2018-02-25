@@ -2,7 +2,7 @@
 
 
 import numpy as np
-from fractions import gcd
+# from fractions import gcd
 
 
 #  remove zeros as higher coefficients
@@ -65,6 +65,8 @@ def inv(x, p):
 #  polydiv
 #  return q and r
 def div(a, b, p):
+    if len(a) < len(b):
+        return [[0], a]
     r = a[:]
     mu = inv(b[-1], p)
     etalist = []
@@ -124,11 +126,12 @@ def tee_pol(f, g, p):
 
 
 #  testing
-[l, r, s, t] = tee(1234567, 123)
-print("r[l] is: %s, t[l] is: %s" % (r[l], t[l]))
+# [l, r, s, t] = tee(1234567, 123)
+# print("r[l] is: %s, t[l] is: %s" % (r[l], t[l]))
 
-[l, r, s, t, q] = tee_pol([1, 1, 1, 1, 1, 1], [1, 0, 0, 0, 1, 1], 2)
-print(r[l])
+# [l, r, s, t, q] = tee_pol([1, 1, 1, 1, 1, 1], [1, 0, 0, 0, 1, 1], 2)
+# print(r[l])
 
-[l, r, s, t, q] = tee_pol([0, 9, 0, 2, 4, 9, 3, 5, 1], [5, 7, 5, 2, 10, 9, 6, 7], 11)
-gcd(1234567, 123)
+# [l, r, s, t, q] = tee_pol([0, 9, 0, 2, 4, 9, 3, 5, 1],
+#                           [5, 7, 5, 2, 10, 9, 6, 7], 11)
+# gcd(1234567, 123)
