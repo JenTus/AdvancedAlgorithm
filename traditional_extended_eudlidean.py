@@ -62,25 +62,52 @@ def inv(x, p):
     return b
 
 
-#  polydiv
+#  polydiv classical algorithm for polynomial division
 #  return q and r
 def div(a, b, p):
     if len(a) < len(b):
         return [[0], a]
     r = a[:]
     mu = inv(b[-1], p)
+    print mu
     etalist = []
 
     for i in range(len(a) - len(b), -1, -1):
         if len(r) == len(b) + i:
             eta = [0 if x != i else r[-1] * mu for x in range(i+1)]
             r = sub(r, mul(eta, b, p), p)
+            print eta, r
         else:
             eta = [0]
         etalist.append(eta)
 
     q = reduce(lambda x, y: add(x, y, p), etalist)
     return [q, r]
+
+
+# test the classical division algorithm
+f = [4, 5, 3, 2, 9, 8, 1, 3, 9, 5, 7]
+g = [5, 7, 5, 5, 1, 7, 4, 5, 8]
+f_tilde = [0, 0, 0, 0, 0, 0, 1, 3, 9, 5, 7]
+g_tilde = [0, 0, 0, 0, 0, 0, 4, 5, 8]
+
+div(f, g, 11)
+div(f_tilde, g_tilde, 11)
+f[-2:]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #  traditional extended eudlidean algorithm
