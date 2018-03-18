@@ -35,6 +35,12 @@ class polynomial:
         e = self.remove_zeros(e)
         return e
 
+    # the polynomial's exponent of k
+    def exp(self, poly, k, p):
+        temp = [poly[] for _ in range(k)]
+        result = reduce((lambda x, y: self.mul(x, y, p)), temp)
+        return result
+
     # addition of polynomails
     def add(self, a, b, p):
         if len(a) > len(b):
@@ -97,6 +103,12 @@ class polynomial:
             #  print "i= %d, r = %s, s = %s, t = %s" %(i,r[i],s[i], t[i])
             i = i+1
         return [i-1, r, s, t, q]
+
+    # calculate the greatest common divisor of two polynomials
+    # through the traditional extendec euclidean algorithm
+    def gcd(self, f, g, p):
+        [l, r, s, t, q] = self.tee_pol(f, g, p)
+        return r[l]
 
 
 # p = polynomial()
