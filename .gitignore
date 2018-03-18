@@ -1,0 +1,8 @@
+# some specific files and data folder to ignore
+cvopt_test.py
+picos_test.py
+data/
+
+
+#.pyc to ignore
+*.pyc
