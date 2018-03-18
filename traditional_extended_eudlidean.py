@@ -37,7 +37,7 @@ class polynomial:
 
     # the polynomial's exponent of k
     def exp(self, poly, k, p):
-        temp = [poly[] for _ in range(k)]
+        temp = [poly[:] for _ in range(k)]
         result = reduce((lambda x, y: self.mul(x, y, p)), temp)
         return result
 
@@ -106,9 +106,11 @@ class polynomial:
 
     # calculate the greatest common divisor of two polynomials
     # through the traditional extendec euclidean algorithm
+    # make sure the polynomial is monic
     def gcd(self, f, g, p):
         [l, r, s, t, q] = self.tee_pol(f, g, p)
-        return r[l]
+        tmp = r[l]
+        return [self.inv(tmp[-1], p) * i % p for i in tmp]
 
 
 # p = polynomial()

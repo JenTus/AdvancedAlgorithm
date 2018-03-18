@@ -13,12 +13,20 @@ def derivative_polynomial(poly, p):
     return result
 
 
+# p_th root of the polynomial
+def root(poly, p):
+    result = []
+    for i in range(len(poly)):
+        if i % p == 0:
+            result.append(poly[i])
+    return result
+
+
 f = [2, 2, 1, 0, 2, 2, 2, 0, 2, 2, 1, 1, 1, 1]
 f_deri = derivative_polynomial(f, 3)
 P = polynomial()
 u = P.gcd(f, f_deri, 3)  # gcd
 [v, _] = P.div(f, u, 3)
-w = P.div(P.gcd(f, P.exp(v, len(f) - 1, 3)))
-
-P.exp(v, 1, 3)
-print v
+[w, _] = P.div(f, P.gcd(f, P.exp(v, (len(f)-1), 3), 3), 3)
+root_w = root(w, 3)
+g = P.mul(root_w, v, 3)  # square-free part of f
