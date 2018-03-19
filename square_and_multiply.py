@@ -11,5 +11,5 @@ def square_and_multiply(f, g, m, p):
         m, flag = m / 2, m % 2
         if flag == 1:
             [_, result] = P.div(P.mul(temp, result, p), g, p)
-        [_, temp] = P.div(P.mul(temp, temp), g, p)
+        [_, temp] = P.div(P.mul(temp, temp, p), g, p)
     return result
