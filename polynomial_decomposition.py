@@ -30,3 +30,9 @@ u = P.gcd(f, f_deri, 3)  # gcd
 [w, _] = P.div(f, P.gcd(f, P.exp(v, (len(f)-1), 3), 3), 3)
 root_w = root(w, 3)
 g = P.mul(root_w, v, 3)  # square-free part of f
+
+N = 2028455971
+s = 702505371
+t = 188270011
+
+(s - t)*(s + t) / N
