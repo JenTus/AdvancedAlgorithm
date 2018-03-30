@@ -12,9 +12,9 @@ from sympy.ntheory.primetest import isprime
 def find_largest_b(N, k):
 
     def next_b(b_pre, b_next):
-        if k ** b_next < N:
+        if b_next ** k < N:
             return next_b(b_next, 2 * b_next)
-        elif k ** b_next == N:
+        elif b_next ** k == N:
             return [1, b_next]
         else:
             if (b_pre + b_next) / 2 == b_pre:
@@ -25,14 +25,15 @@ def find_largest_b(N, k):
     return next_b(1, 1)
 
 
-# i^^b = N
+# b^^i = N
 def find_prime_power(N):
-    for i in range(2, int(math.log(N) / math.log(2))):
+    for i in range(2, int(math.log(N, 2) + 1)):
         [flag, b] = find_largest_b(N, i)
         if flag == 1:
-            if isprime(i):
+            if isprime(b):
                 return [b, i]
-    return "N is not a prime power"
+    return str(N) + " is not a prime power"
 
 
-print find_prime_power(1024)
+print find_prime_power(4**10)
+print find_prime_power(3**10)

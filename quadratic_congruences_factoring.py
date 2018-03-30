@@ -16,11 +16,6 @@ b = I.gcd(s - t, N)
 N / I.gcd(s - t, N)
 44027*46073
 
-for i in range(1, b):
-    if a % i == 0:
-        print i
-print a
-print b
 
 sieve.search(a)
 sieve.search(b)
